@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup as bs
 from urllib.request import urlopen as uReq
 import logging
+import pymongo
 logging.basicConfig(filename="scrapper.log" , level=logging.INFO)
 
 app = Flask(__name__)
@@ -72,6 +73,32 @@ def index():
                           "Comment": custComment}
                 reviews.append(mydict)
             logging.info("log my final result {}".format(reviews))
+            
+
+            # try:
+            #     # Establish the MongoDB connection
+            #     client = pymongo.MongoClient("mongodb+srv://AnujDhyani:dhyanianuj0303@cluster0.oxumags.mongodb.net/?retryWrites=true&w=majority")
+
+            #     # Check connection status
+            #     if client.is_mongos:
+            #         print("Connected to MongoDB cluster successfully.")
+            #     else:
+            #         print("Connection to MongoDB cluster failed.")
+
+            #     # Select the database and collection
+            #     db = client['review_scrap']
+            #     review_col = db['review_scrap_data']
+
+            #     # Insert documents into the collection
+            #     result = review_col.insert_many(reviews)
+
+            #     # Output the number of documents inserted
+            #     print("Inserted", len(result.inserted_ids), "documents into the collection.")
+
+            # except pymongo.errors.PyMongoError as e:
+            #     print("An error occurred:", e)
+
+            
             return render_template('result.html', reviews=reviews[0:(len(reviews)-1)])
         except Exception as e:
             logging.info(e)
